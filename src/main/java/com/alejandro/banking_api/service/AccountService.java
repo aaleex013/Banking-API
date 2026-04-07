@@ -26,7 +26,7 @@ public class AccountService {
     public AccountResponse createAccount(String email, CreateAccountRequest createAccountRequest) {
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotfoundException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         if (!user.isActive()) {
             throw new InactiveUserException("User not active");
@@ -56,7 +56,7 @@ public class AccountService {
 
     public List<AccountResponse> getMyAccounts(String email) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotfoundException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
         return accountRepository.findByUserId(user.getId())
                 .stream()
                 .map(this::mapToResponse)
@@ -65,7 +65,7 @@ public class AccountService {
 
     public AccountResponse getMyAccountById(String email, Long id) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotfoundException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         Account account = accountRepository.findById(id)
                 .orElseThrow(() -> new AccountNotFoundException("Account not found"));
