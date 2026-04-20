@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
     //devuelve todas las transacciones de una cuenta(por el id de la cuenta)
-    Page<Transaction> findByAccountId(Long accountId, Pageable pageable);
+    Page<Transaction> findByAccountIdOrderByCreatedAtDesc(Long accountId, Pageable pageable);
 }

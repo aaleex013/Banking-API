@@ -2,7 +2,9 @@ package com.alejandro.banking_api.controller;
 
 import com.alejandro.banking_api.dto.AccountResponse;
 import com.alejandro.banking_api.dto.CreateAccountRequest;
+import com.alejandro.banking_api.dto.TransactionResponse;
 import com.alejandro.banking_api.service.AccountService;
+import com.alejandro.banking_api.service.TransactionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AccountController {
     private final AccountService accountService;
+    private final TransactionService transactionService;
 
     @PostMapping
     public ResponseEntity<AccountResponse> createAccount(Authentication authentication, @Valid @RequestBody CreateAccountRequest createAccountRequest) {
@@ -38,6 +41,12 @@ public class AccountController {
         String email = authentication.getName();
         AccountResponse accountResponse = accountService.getMyAccountById(email, id);
         return ResponseEntity.ok(accountResponse);
+    }
 
+    @GetMapping("/{id}/transactions")
+    public ResponseEntity<List<TransactionResponse>> getTransactionsByAccountId(Authentication authentication, @PathVariable Long id) {
+        String email = authentication.getName();
+        List<TransactionResponse> transactions = transactionService.getTransactionsByAccountId(email,id);
+        return ResponseEntity.ok(transactions);
     }
 }
