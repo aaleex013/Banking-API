@@ -2,6 +2,7 @@ package com.alejandro.banking_api.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.Builder;
 import jakarta.persistence.Id;
 
 import java.math.BigDecimal;
@@ -33,6 +34,7 @@ public class Account {
     @Column(nullable = false)
     private BigDecimal balance;
 
+    @Builder.Default
     @Column(nullable = false)
     private boolean active = true;
 

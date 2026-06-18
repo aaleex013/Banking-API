@@ -7,6 +7,7 @@ import com.alejandro.banking_api.dto.RegisterRequest;
 import com.alejandro.banking_api.entity.Role;
 import com.alejandro.banking_api.entity.User;
 import com.alejandro.banking_api.exception.EmailAlreadyExistsException;
+import com.alejandro.banking_api.exception.InactiveUserException;
 import com.alejandro.banking_api.exception.InvalidCredentialsException;
 import com.alejandro.banking_api.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -38,13 +39,13 @@ public class AuthService {
 
     public LoginResponse login(LoginRequest loginRequest) {
         User user = userRepository.findByEmail(loginRequest.email())
-                .orElseThrow(() -> new InvalidCredentialsException("Invalid email")
+                .orElseThrow(() -> new InvalidCredentialsException("Invalid email or user not found")
         );
         if (!passwordEncoder.matches(loginRequest.password(), user.getPassword())) {
             throw new InvalidCredentialsException("Invalid password");
         }
         if (!user.isActive()) {
-            throw new InvalidCredentialsException("User is not active");
+            throw new InactiveUserException("User is not active");
         }
         String token = jwtService.generateToken(user.getEmail());
         return new LoginResponse(token);
