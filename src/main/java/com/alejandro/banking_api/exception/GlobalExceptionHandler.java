@@ -56,26 +56,30 @@ public class GlobalExceptionHandler {
         error.put("message", ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
+
     @ExceptionHandler(InactiveUserException.class)
     public ResponseEntity<Map<String, String>> handleInactiveUser(Exception ex) {
         Map<String, String> error = new HashMap<>();
         error.put("message", ex.getMessage());
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
     }
+
     @ExceptionHandler(AccountNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleAccountNotFound(AccountNotFoundException ex) {
         Map<String, String> error = new HashMap<>();
         error.put("message", ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
+
     @ExceptionHandler(UnauthorizedAccessException.class)
     public ResponseEntity<Map<String, String>> handleUnauthorizedAccess(AccountLockedException ex) {
         Map<String, String> error = new HashMap<>();
         error.put("message", ex.getMessage());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
     }
+
     @ExceptionHandler(TransferNotFoundException.class)
-    public  ResponseEntity<Map<String, String>> handleTransferNotFound(AccountLockedException ex) {
+    public ResponseEntity<Map<String, String>> handleTransferNotFound(AccountLockedException ex) {
         Map<String, String> error = new HashMap<>();
         error.put("message", ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
