@@ -1,7 +1,6 @@
 package com.alejandro.banking_api.controller;
 
-import com.alejandro.banking_api.dto.AdminUserResponse;
-import com.alejandro.banking_api.dto.UpdateUserStatusRequest;
+import com.alejandro.banking_api.dto.*;
 import com.alejandro.banking_api.service.AdminService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -35,4 +34,19 @@ public class AdminController {
     ) {
         return ResponseEntity.ok(adminService.updateUserStatus(id, request));
     }
+
+    @GetMapping("/users/{id}/accounts")
+    public ResponseEntity<List<AccountResponse>> getUserAccounts(@PathVariable Long id) {
+        return ResponseEntity.ok(adminService.getUserAccounts(id));
+
+    }
+    @GetMapping("/users/{id}/transfers")
+    public ResponseEntity<List<TransferResponse>> getUserTransfers(@PathVariable Long id) {
+        return ResponseEntity.ok(adminService.getUserTransfers(id));
+    }
+    @GetMapping("/users/{id}/transactions")
+    public ResponseEntity<List<TransactionResponse>> getUserTransaction( @PathVariable Long id) {
+        return ResponseEntity.ok(adminService.getUserTransaction(id));
+    }
+
 }
